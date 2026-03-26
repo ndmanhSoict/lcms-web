@@ -67,7 +67,7 @@ export function LoginPage() {
     }
 
     setAuth(mockEntry.user, 'mock-access-token')
-    navigate({ to: getDefaultRouteForRole(mockEntry.user.role) as never })
+    navigate({ to: getDefaultRouteForRole(mockEntry.user.role) as any })
   }
 
   return (

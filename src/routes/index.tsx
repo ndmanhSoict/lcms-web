@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({
   beforeLoad: () => {
     const { isAuthenticated, user } = useAuthStore.getState()
     if (isAuthenticated && user) {
-      throw redirect({ to: getDefaultRouteForRole(user.role) as never })
+      throw redirect({ to: getDefaultRouteForRole(user.role) as any })
     }
     throw redirect({ to: '/login' })
   },
