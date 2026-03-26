@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# LCMS Web - Learning Center Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern frontend for managing learning centers, built with React 19 + TypeScript + Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **TypeScript**
+- **Vite 7** — build tool with path alias `@/` → `src/`
+- **TanStack Router** — file-based routing with role-based access control
+- **TanStack Query** — server state management
+- **MUI v7** — UI component library
+- **Zustand** — client state (auth, UI)
+- **Axios** — HTTP client with JWT interceptors & token refresh
+- **React Hook Form** + **Zod** — form validation
+- **Prettier** + **ESLint** — code quality
 
-## React Compiler
+## Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Demo Accounts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Role    | Email               | Password |
+|---------|---------------------|----------|
+| Admin   | admin@lcms.vn       | password |
+| Branch  | branch@lcms.vn      | password |
+| Teacher | teacher@lcms.vn     | password |
+| Student | student@lcms.vn     | password |
+| Parent  | parent@lcms.vn      | password |
+| Staff   | staff@lcms.vn       | password |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
 ```
+src/
+├── app/            # App entry & providers
+│   └── providers/  # ThemeProvider, QueryProvider
+├── components/
+│   └── ui/         # Reusable UI components
+├── constants/      # Roles, route paths
+├── features/       # Feature modules (auth, students, classes, ...)
+├── hooks/          # Custom hooks (useAuth, usePermission, useDebounce)
+├── layouts/        # AdminLayout, AuthLayout, DashboardLayout
+├── routes/         # File-based routes (TanStack Router)
+│   ├── __root.tsx
+│   ├── index.tsx
+│   ├── _auth.tsx           # Pathless layout for auth pages
+│   ├── _auth/login.tsx     # /login
+│   ├── _protected.tsx      # Pathless layout — requires auth
+│   └── _protected/         # Role-based sub-routes
+├── services/       # apiClient, queryClient, queryKeys
+├── store/          # Zustand stores (auth, ui)
+├── theme/          # MUI theme config
+├── types/          # TypeScript interfaces
+└── utils/          # Formatting, permissions
+```
+
+## Scripts
+
+| Command          | Description                    |
+|------------------|--------------------------------|
+| `npm run dev`    | Start dev server               |
+| `npm run build`  | Type-check + production build  |
+| `npm run lint`   | Run ESLint                     |
+| `npm run format` | Format with Prettier           |
+| `npm run preview`| Preview production build       |
